@@ -11,7 +11,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
 public class C1 extends Canvas implements WindowListener,MouseListener{
-	
+	static Inventaire inv = new Inventaire();
 
 	public static void main(String args[]) {
 		C1 c = new C1();
@@ -22,8 +22,10 @@ public class C1 extends Canvas implements WindowListener,MouseListener{
 		f.setSize(1100,600);
 		f.setTitle("Ma  premiere app");
 		f.setVisible(true);
-		inventaire inv = new inventaire();
+		
 		inv.inventaire[4] = new Objets("balle rouge",1,true);
+		
+		//
 
 	}
 
@@ -39,6 +41,14 @@ public class C1 extends Canvas implements WindowListener,MouseListener{
 			g.drawRect(i*50, 400+(j*50), 50, 50);
 		}
 		j+=1;
+		}
+		for (int n=0; n < inv.inventaire.length ; n++) {
+			if (inv.inventaire[n].plein==true) {
+				g.setColor(Color.red);
+				int x =(((n-1)%21)*50);
+				int y =400+(50*((n-1)/21));
+				g.fillOval(50+x+5, y+5, 40, 40);
+			}
 		}
 		
 		
@@ -97,8 +107,10 @@ public class C1 extends Canvas implements WindowListener,MouseListener{
 	    	int j=(x/50);
 	    	
 	    	int n=((i*21)+j);
-
+	    	
+	    	inv.echange(n);
 	    	System.out.println(n);
+	    	repaint();
 	    }
 	 
 	    

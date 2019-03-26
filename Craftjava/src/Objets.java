@@ -2,12 +2,12 @@
 public class Objets {
 	String nom;
 	int nombre;
-	boolean nul;
+	boolean plein;
 	
 	public Objets( String i,int nombre, boolean vrais) {
 		this.nom=i;
 		this.nombre = nombre;
-		this.nul = vrais;
+		this.plein = vrais;
 		
 	}
 
