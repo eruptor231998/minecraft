@@ -27,7 +27,7 @@ en dï¿½placer un dans la combinaison, on a un problï¿½me d'affichage pour 
 */
 public class C1 extends JPanel implements ActionListener,WindowListener,MouseListener {
 
-	static Image img=new ImageIcon("wallpaper.png").getImage();
+	static Image img=new ImageIcon("wallpaper.jpg").getImage();
 
 	static Image image2=new ImageIcon("wood1.png").getImage();
 	static Image image1=new ImageIcon("wood.png").getImage();
@@ -245,7 +245,33 @@ public class C1 extends JPanel implements ActionListener,WindowListener,MouseLis
 		int buttonDown = e.getButton();
 
 	 	if (buttonDown == MouseEvent.BUTTON1) {
-		           // Bouton GAUCHE enfonc銉 		System.out.println("clique gauche");
+	 		x=e.getX();
+			 y=e.getY();
+
+			 if ((x<550 && x>400)&&(100<y && y<250)) {
+				 int i=(y/50);
+				 int j=(x/50);
+
+				 int n=((i*3)+j)-13;
+
+				 System.out.println("Combinaison : "+n);
+
+			 inv.select_un(n);
+			 repaint();
+			 }
+
+			 if ((x<1100 && x>50)&&(400<y && y<550)) {
+				 int i=(y/50)-8;
+				 int j=(x/50);
+
+				 int n=((i*21)+j);
+
+				 System.out.println("Ressource : "+n);
+
+
+			 inv.select_un(n+9);
+			 repaint();
+			 }
 
 	    } else if(buttonDown == MouseEvent.BUTTON3) {
 				x=e.getX();
