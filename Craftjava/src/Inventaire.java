@@ -14,4 +14,25 @@ public class Inventaire {
 		inventaire[n]= tampon;
 	}
 
+	public void select_un(int  n) { //prend un element
+
+	if (m.tenu.nom=="vide") {
+		Objets tampon = m.tenu;
+		m.tien(inventaire[n]);
+		inventaire[n]= tampon;
+	}
+
+	else if (m.tenu.nom!="vide" && m.tenu.nombre==0) {
+		m.tenu.plein=false;
+
+	}
+
+	else {
+		m.tenu.nombre-=1;
+	}
+
+
+}
+
+
 }
