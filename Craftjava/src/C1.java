@@ -5,6 +5,8 @@ import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Label;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
@@ -17,15 +19,15 @@ import javax.swing.JPanel;
 
 //PB:
 /*
-Quand on a plusieurs objets, on peut les d�placer dans l'inventaire mais si l'on veut
-en d�placer un dans la combinaison, on a un probl�me d'affichage pour les autres.
+Quand on a plusieurs objets, on peut les dï¿½placer dans l'inventaire mais si l'on veut
+en dï¿½placer un dans la combinaison, on a un problï¿½me d'affichage pour les autres.
 
 
 
 */
-public class C1 extends JPanel implements WindowListener,MouseListener {
+public class C1 extends JPanel implements ActionListener,WindowListener,MouseListener {
 
-	static Image img=new ImageIcon("wallpaper.jpg").getImage();
+	static Image img=new ImageIcon("wallpaper.png").getImage();
 
 	static Image image2=new ImageIcon("wood1.png").getImage();
 	static Image image1=new ImageIcon("wood.png").getImage();
@@ -58,14 +60,21 @@ public class C1 extends JPanel implements WindowListener,MouseListener {
 		C1 c = new C1();
 		Frame f = new Frame();
 		f.setSize(1175,625);
-		f.add(c);
 		f.addWindowListener(c);
 		c.addMouseListener(c);
+		JButton bt1 = new JButton("Craft");
+        bt1.setBounds(725,180,75,50);
+        f.add(bt1);
+        bt1.addActionListener(c);
+        JButton bt2 = new JButton("Reset");
+        bt2.setBounds(10,35,75,50);
+        f.add(bt2);
+        f.add(c);
+        bt2.addActionListener(c);
 		f.setTitle("Minecraft-master");
 		f.setVisible(true);
 		for (int i=1; i<tableauImg.length;i++) {
 		inv.inventaire[i+9] = (Objets) obj.get(i);}
-
 
 
 	}
@@ -73,10 +82,10 @@ public class C1 extends JPanel implements WindowListener,MouseListener {
 	public void paint(Graphics g) {
 		Color c = Color.GRAY;
 		Color d=Color.white;
-		// fond d'�cran
+		// fond d'ï¿½cran
 		g.drawImage(img, 0,0,null);
 
-		//Bloc du r�sultat
+		//Bloc du rï¿½sultat
 		g.setColor(c);
 		g.fillRect(650,150, 50, 50);
 		g.setColor(d);
@@ -133,10 +142,8 @@ public class C1 extends JPanel implements WindowListener,MouseListener {
 				if (n>9) {
 					int x =(((n-10)%21)*50);
 					int y =400+(50*((n-10)/21));
-					g.drawImage(tableauImg[inv.inventaire[n].image],50+x, y,null);}
-					if (inv.inventaire[n].nombre>0) {
-						Label la = new Label( );
-						la.setText("une etiquette");
+					g.drawImage(tableauImg[inv.inventaire[n].image],50+x, y,null);
+					g.drawString(String.valueOf(inv.inventaire[n].nombre), 50+x+40, y+45);
 					}
 
 				//dans les combinaisons
@@ -144,6 +151,7 @@ public class C1 extends JPanel implements WindowListener,MouseListener {
 					int x = 350+((n-1)%3)*50;
 					int y = 100+(50*((n-1)/3));
 					g.drawImage(tableauImg[inv.inventaire[n].image],50+x, y,null);
+					g.drawString(String.valueOf(inv.inventaire[n].nombre), 50+x+40, y+45);
 
 					int i=(y/50)-2;
 					int jj=(x/50)-7;
@@ -156,10 +164,16 @@ public class C1 extends JPanel implements WindowListener,MouseListener {
 					for (int k=0;k<matrice.length;k++) {
 
 							System.out.print(matrice[k]);
+					//repaint();
+
+
+
+
 
 					}
 
 				}
+
 			}
 		}
 
@@ -168,6 +182,11 @@ public class C1 extends JPanel implements WindowListener,MouseListener {
 
 
 
+	}
+
+	private String Str(int nombre) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
@@ -216,33 +235,6 @@ public class C1 extends JPanel implements WindowListener,MouseListener {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
-		x=e.getX();
-	    y=e.getY();
-
-	    if ((x<550 && x>400)&&(100<y && y<250)) {
-	    	int i=(y/50);
-	    	int j=(x/50);
-
-	    	int n=((i*3)+j)-13;
-
-	    	System.out.println("Combinaison : "+n);
-
-	    inv.echange(n);
-	    repaint();
-	    }
-
-	    if ((x<1100 && x>50)&&(400<y && y<550)) {
-	    	int i=(y/50)-8;
-	    	int j=(x/50);
-
-	    	int n=((i*21)+j);
-
-	    	System.out.println("Ressource : "+n);
-
-
-	    inv.echange(n+9);
-    	repaint();
-	    }
 
 
 
@@ -250,7 +242,41 @@ public class C1 extends JPanel implements WindowListener,MouseListener {
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
+		int buttonDown = e.getButton();
+
+	 	if (buttonDown == MouseEvent.BUTTON1) {
+		           // Bouton GAUCHE enfonc銉 		System.out.println("clique gauche");
+
+	    } else if(buttonDown == MouseEvent.BUTTON3) {
+				x=e.getX();
+				 y=e.getY();
+
+				 if ((x<550 && x>400)&&(100<y && y<250)) {
+					 int i=(y/50);
+					 int j=(x/50);
+
+					 int n=((i*3)+j)-13;
+
+					 System.out.println("Combinaison : "+n);
+
+				 inv.echange(n);
+				 repaint();
+				 }
+
+				 if ((x<1100 && x>50)&&(400<y && y<550)) {
+					 int i=(y/50)-8;
+					 int j=(x/50);
+
+					 int n=((i*21)+j);
+
+					 System.out.println("Ressource : "+n);
+
+
+				 inv.echange(n+9);
+				 repaint();
+				 }
+
+		    }
 
 	}
 
@@ -269,6 +295,21 @@ public class C1 extends JPanel implements WindowListener,MouseListener {
 	@Override
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		String com = e.getActionCommand(); //le bouton sélectionné
+		System.out.println("Action sur le composant : " + com);
+
+		if (com=="Craft") {
+		System.out.println("ok");
+		repaint();}
+
+		if (com=="Reset") {
+		System.out.println("ok1");
+		}
 
 	}
 
