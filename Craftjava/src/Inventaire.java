@@ -30,20 +30,49 @@ public class Inventaire {
 
 	public void select_un(int  n) { //prend un element clic droit
 
-	if (m.tenu.nom =="vide" && invnombre[n]>1 ) {
-		invnombre[n] = invnombre[n]/2;
-		Objets tampon = m.tenu;
+	if (m.tenu.nom =="vide" && invnombre[n]>1 && inventaire[n].nom!="vide") {
+		int nb =invnombre[n]/2;
+		invnombre[n] = nb;
+
 		m.tien(inventaire[n]);
-		inventaire[n]= tampon;
+
+		m.nbobjtenu=nb;
 	}
+
+
 
 	else if (m.tenu.nom == inventaire[n].nom) {
 		invnombre[n]++;
 		m.tenu = new Objets("vide",false,0);
-		m.nbobjtenu = 0;
+		m.nbobjtenu --;
 	}
 
-	else if ( m.tenu.nom =="vide")  {
+	else if ( m.tenu.nom ==inventaire[n].nom && invnombre[n]>1)  {
+		m.nbobjtenu--;
+		invnombre[n]++;
+
+
+	}
+	else if (inventaire[n].nom=="vide" && m.tenu.nom!="vide") {
+		if(m.nbobjtenu>1) {
+			m.nbobjtenu--;
+			inventaire[n]=m.tenu;
+			invnombre[n]=1;
+
+		}
+
+		else {
+			Objets tampon = m.tenu;
+			m.tien(inventaire[n]);
+			inventaire[n]= tampon;
+			int nbtampon = m.nbobjtenu;
+			m.nbobjtenu = invnombre[n];
+			invnombre[n]= nbtampon;
+
+		}
+
+	}
+	else if ( m.tenu.nom !="vide" && m.nbobjtenu ==1 && inventaire[n].nom =="vide")  {
 		Objets tampon = m.tenu;
 		m.tien(inventaire[n]);
 		inventaire[n]= tampon;
@@ -53,17 +82,11 @@ public class Inventaire {
 	}
 	}
 
-	public void echange_entre(int n,int m) {
+	public void remplace(int n) {
+		if (invnombre[n]==0) {
+			inventaire[n]=new Objets("vide",false,0);
+		}
 
-		Objets y =inventaire[m];
-		Objets z=inventaire[n];
-		int nby=invnombre[m];
-		int nbz=invnombre[n];
-
-		inventaire[n]=y;
-		inventaire[m]=z;
-		invnombre[n]=nby;
-		invnombre[m]=nbz;
 
 	}
 
