@@ -11,6 +11,10 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -70,11 +74,11 @@ public class C1 extends JPanel implements ActionListener,WindowListener,MouseLis
         bt1.setBounds(725,180,75,50);
         f.add(bt1);
         bt1.addActionListener(c);
-        JButton bt2 = new JButton("Reset");
-        bt2.setBounds(10,35,75,50);
-        f.add(bt2);
+
+
+
         f.add(c);
-        bt2.addActionListener(c);
+        
 		f.setTitle("Minecraft-master");
 		f.setVisible(true);
 		for (int i=1; i<tableauImg.length;i++) {
@@ -198,13 +202,11 @@ public class C1 extends JPanel implements ActionListener,WindowListener,MouseLis
 				for (int i=0;i<9;i++){
 
 					if (inv.inventaire[i].nom!="vide") {
-						int j=10;
-						while (inv.inventaire[j].nom!="vide") {
-							j++;
+						inv.invnombre[i]--;
+						int j=14;
 
-						}
 
-						inv.echange_entre( i, j);
+						inv.remplace(i);
 					}
 
 
@@ -226,6 +228,9 @@ public class C1 extends JPanel implements ActionListener,WindowListener,MouseLis
 				matrice[b]=0;
 			}
 		}
+
+
+
 
 
 
@@ -280,7 +285,16 @@ public class C1 extends JPanel implements ActionListener,WindowListener,MouseLis
 		}
 	}
 
-
+	public static void sauver() throws IOException {
+		String texte ="";
+		for(int i = 0 ; i < 73 ;i++) {
+			texte += inv.inventaire[i].image+"/";
+			texte += inv.invnombre[i]+":";
+		}
+		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("sauver.txt", true)));
+		 out.println(texte);
+		 out.close();
+	}
 
 	@Override
 	public void windowActivated(WindowEvent arg0) {
@@ -383,8 +397,7 @@ public class C1 extends JPanel implements ActionListener,WindowListener,MouseLis
 		ne=1; //je dis au paint de tester le craft
 		repaint();}
 
-		if (com=="Reset") {
-			    }
+
 
 	}
 
